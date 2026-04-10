@@ -20,12 +20,12 @@ export function AdminProjectEditPage() {
   return (
     <PageContainer>
       <PageTitle
-        title="Edit Project"
-        description="Обновите данные проекта, замените изображения при необходимости и сохраните изменения."
+        title="Редактировать проект"
+        description="Обновите информацию о проекте, при необходимости замените фотографии и сохраните изменения."
         breadcrumbs={[
-          { label: 'Dashboard', to: '/admin' },
-          { label: 'Projects', to: '/admin/projects' },
-          { label: 'Edit Project' },
+          { label: 'Главная', to: '/admin' },
+          { label: 'Проекты', to: '/admin/projects' },
+          { label: 'Редактировать проект' },
         ]}
       />
 
@@ -58,4 +58,3 @@ export function AdminProjectEditPage() {
     </PageContainer>
   );
 }
-

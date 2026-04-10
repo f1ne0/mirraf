@@ -1,15 +1,14 @@
 import { Avatar, Box, Button, Flex, Icon, Stack, Text, useToast } from '@chakra-ui/react';
-import { FiFolder, FiGrid, FiLogOut, FiPlusCircle, FiSettings } from 'react-icons/fi';
+import { FiFolder, FiGrid, FiLogOut, FiPlusCircle } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { logoutAdmin } from '../../features/admin-auth/authService';
 import { useAdminAuth } from '../../features/admin-auth/AuthProvider';
 import { SidebarItem } from './SidebarItem';
 
 const items = [
-  { label: 'Dashboard', to: '/admin', icon: FiGrid, end: true },
-  { label: 'Projects', to: '/admin/projects', icon: FiFolder, end: true },
-  { label: 'Add Project', to: '/admin/projects/create', icon: FiPlusCircle, end: true },
-  { label: 'Settings', to: '/admin/settings', icon: FiSettings, end: true },
+  { label: 'Панель', to: '/admin', icon: FiGrid, end: true },
+  { label: 'Проекты', to: '/admin/projects', icon: FiFolder, end: true },
+  { label: 'Добавить проект', to: '/admin/projects/create', icon: FiPlusCircle, end: true },
 ];
 
 export function Sidebar() {
@@ -33,7 +32,7 @@ export function Sidebar() {
             Mirraf
           </Text>
           <Text fontSize="2xl" fontWeight="800">
-            Admin Suite
+            Панель проектов
           </Text>
         </Box>
 

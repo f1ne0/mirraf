@@ -1,17 +1,15 @@
-import { Box, Flex, HStack, IconButton, Text } from '@chakra-ui/react';
+import { Flex, HStack, IconButton, Text } from '@chakra-ui/react';
 import { FiMenu } from 'react-icons/fi';
 
 type AdminHeaderProps = {
-  title: string;
-  description: string;
   onOpenMenu: () => void;
 };
 
-export function AdminHeader({ title, description, onOpenMenu }: AdminHeaderProps) {
+export function AdminHeader({ onOpenMenu }: AdminHeaderProps) {
   return (
     <Flex
       align="center"
-      justify="space-between"
+      justify="flex-start"
       px={{ base: 4, md: 6 }}
       py={4}
       borderBottom="1px solid"
@@ -31,29 +29,10 @@ export function AdminHeader({ title, description, onOpenMenu }: AdminHeaderProps
           color="admin.text"
           onClick={onOpenMenu}
         />
-        <Box>
-          <Text fontSize={{ base: 'lg', md: 'xl' }} fontWeight="800">
-            {title}
-          </Text>
-          <Text fontSize="sm" color="admin.textMuted">
-            {description}
-          </Text>
-        </Box>
-      </HStack>
-
-      <Box
-        display={{ base: 'none', md: 'block' }}
-        px={3}
-        py={2}
-        borderRadius="16px"
-        bg="rgba(255,255,255,0.03)"
-        border="1px solid"
-        borderColor="admin.border"
-      >
-        <Text fontSize="sm" color="admin.textMuted">
-          Furniture Projects Admin
+        <Text fontSize={{ base: 'lg', md: 'xl' }} fontWeight="800">
+          Mirraf Admin
         </Text>
-      </Box>
+      </HStack>
     </Flex>
   );
 }

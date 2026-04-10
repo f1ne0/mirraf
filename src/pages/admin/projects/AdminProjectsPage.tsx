@@ -43,9 +43,9 @@ export function AdminProjectsPage() {
       <Stack spacing={6}>
         <HStack justify="space-between" align="flex-start" flexWrap="wrap" gap={4}>
           <PageTitle
-            title="Projects"
-            description="Список проектов с превью изображений, 360-ссылкой, ценой и действиями редактирования."
-            breadcrumbs={[{ label: 'Dashboard', to: '/admin' }, { label: 'Projects' }]}
+            title="Проекты"
+            description="Список проектов с фотографиями, стоимостью и действиями редактирования."
+            breadcrumbs={[{ label: 'Главная', to: '/admin' }, { label: 'Проекты' }]}
           />
           <Button onClick={() => navigate('/admin/projects/create')}>Добавить проект</Button>
         </HStack>

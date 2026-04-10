@@ -82,11 +82,11 @@ export function AdminLoginPage() {
                 Mirraf Admin Dashboard
               </Text>
               <Heading fontSize={{ base: '4xl', md: '6xl' }} lineHeight={0.94}>
-                Профессиональная панель управления мебельными проектами
+                Панель управления мебельными проектами
               </Heading>
               <Text color="admin.textMuted" fontSize={{ base: 'md', md: 'lg' }} lineHeight={1.85}>
-                Современный интерфейс для ведения проектов, загрузки изображений, контроля цен,
-                превью панорам и будущего подключения Supabase или backend без полной переделки.
+                Удобное пространство для добавления, редактирования и публикации проектов
+                компании в одном месте.
               </Text>
             </Stack>
           </GridItem>
@@ -104,7 +104,7 @@ export function AdminLoginPage() {
               p={{ base: 6, md: 8 }}
             >
               <Heading size="lg">Авторизация</Heading>
-              <Text color="admin.textMuted">Войдите через Supabase Auth.</Text>
+              <Text color="admin.textMuted">Войдите, чтобы открыть панель управления.</Text>
 
               <Box>
                 <Text mb={2} fontWeight="700">Email</Text>

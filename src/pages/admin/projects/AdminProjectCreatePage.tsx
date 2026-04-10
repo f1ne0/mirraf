@@ -13,12 +13,12 @@ export function AdminProjectCreatePage() {
   return (
     <PageContainer>
       <PageTitle
-        title="Add Project"
-        description="Заполните все поля, загрузите два изображения и сохраните новый проект."
+        title="Добавить проект"
+        description="Заполните основные данные проекта, добавьте фотографии и сохраните запись."
         breadcrumbs={[
-          { label: 'Dashboard', to: '/admin' },
-          { label: 'Projects', to: '/admin/projects' },
-          { label: 'Add Project' },
+          { label: 'Главная', to: '/admin' },
+          { label: 'Проекты', to: '/admin/projects' },
+          { label: 'Добавить проект' },
         ]}
       />
 
@@ -39,4 +39,3 @@ export function AdminProjectCreatePage() {
     </PageContainer>
   );
 }
-
