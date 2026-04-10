@@ -66,7 +66,7 @@ export function ProjectForm({
       address: initialValues?.address ?? '',
       price: initialValues?.price ?? 0,
       panoramaUrl: initialValues?.panoramaUrl ?? '',
-      isPublished: initialValues?.isPublished ?? false,
+      isPublished: initialValues?.isPublished ?? mode === 'create',
       designImage: undefined,
       resultImage: undefined,
     },
@@ -201,7 +201,7 @@ export function ProjectForm({
         pt={2}
       >
         <Text color="admin.textMuted" fontSize="sm">
-          Данные и изображения сохраняются в Supabase.
+          Проверьте поля и сохраните изменения.
         </Text>
         <Button type="submit" isLoading={isSubmitting} minW="220px">
           {mode === 'create' ? 'Создать проект' : 'Сохранить изменения'}
