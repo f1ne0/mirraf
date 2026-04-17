@@ -151,6 +151,7 @@ export const adminTheme = extendTheme({
             border: '1px solid',
             borderColor: 'admin.border',
             borderRadius: '16px',
+            pr: 10,
             _placeholder: {
               color: 'admin.textSoft',
             },
@@ -170,6 +171,70 @@ export const adminTheme = extendTheme({
         variant: 'admin',
       },
     },
+    Select: {
+      variants: {
+        admin: {
+          field: {
+            bg: 'rgba(255,255,255,0.04)',
+            color: 'admin.text',
+            border: '1px solid',
+            borderColor: 'admin.border',
+            borderRadius: '16px',
+            _placeholder: {
+              color: 'admin.textSoft',
+            },
+            _hover: {
+              borderColor: 'admin.borderStrong',
+              bg: 'rgba(255,255,255,0.05)',
+            },
+            _focusVisible: {
+              borderColor: 'accent.400',
+              boxShadow: 'adminFocus',
+              bg: 'rgba(255,255,255,0.06)',
+            },
+          },
+          icon: {
+            color: 'admin.textMuted',
+          },
+        },
+      },
+      defaultProps: {
+        variant: 'admin',
+      },
+    },
+    Checkbox: {
+      baseStyle: {
+        control: {
+          borderRadius: '10px',
+          borderColor: 'admin.borderStrong',
+          bg: 'rgba(255,255,255,0.02)',
+          _hover: {
+            borderColor: 'accent.400',
+            bg: 'rgba(255,255,255,0.05)',
+          },
+          _checked: {
+            bg: 'accent.400',
+            borderColor: 'accent.400',
+            color: 'admin.900',
+            _hover: {
+              bg: 'accent.500',
+              borderColor: 'accent.500',
+            },
+          },
+          _indeterminate: {
+            bg: 'accent.400',
+            borderColor: 'accent.400',
+            color: 'admin.900',
+          },
+        },
+        icon: {
+          color: 'admin.900',
+        },
+      },
+      defaultProps: {
+        colorScheme: 'accent',
+      },
+    },
     Table: {
       variants: {
         admin: {
@@ -186,21 +251,37 @@ export const adminTheme = extendTheme({
               textTransform: 'uppercase',
               fontWeight: '700',
               px: 4,
+              position: 'sticky',
+              top: 0,
+              zIndex: 1,
+              bg: 'admin.surface',
+              backdropFilter: 'blur(12px)',
             },
           },
           tbody: {
             tr: {
-              bg: 'rgba(255,255,255,0.02)',
-              boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.04)',
               transition: 'transform 0.2s ease, background 0.2s ease',
               _hover: {
-                bg: 'rgba(255,255,255,0.04)',
+                '& td': {
+                  bg: 'rgba(255,255,255,0.04)',
+                },
               },
+              borderRadius: '24px',
             },
             td: {
               borderBottom: 'none',
               py: 4,
               px: 4,
+              bg: 'rgba(255,255,255,0.02)',
+              boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.04)',
+              '&:first-of-type': {
+                borderTopLeftRadius: '24px',
+                borderBottomLeftRadius: '24px',
+              },
+              '&:last-of-type': {
+                borderTopRightRadius: '24px',
+                borderBottomRightRadius: '24px',
+              },
             },
           },
         },
@@ -238,4 +319,3 @@ export const adminTheme = extendTheme({
     },
   },
 });
-

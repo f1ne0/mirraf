@@ -1,4 +1,7 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, Stack, Text } from '@chakra-ui/react';
+import { MouseEvent } from 'react';
+import { ProjectCategoryBadge } from '../../entities/project/ui/ProjectCategoryBadge';
+import { ProjectPublishBadge } from '../../entities/project/ui/ProjectPublishBadge';
 import { Project } from '../../entities/project/model/types';
 
 type ProjectCellProps = {
@@ -7,8 +10,16 @@ type ProjectCellProps = {
 };
 
 export function ProjectCell({ project, onImagePreview }: ProjectCellProps) {
+  const handlePreviewClick = (
+    event: MouseEvent<HTMLImageElement>,
+    payload: { src: string; alt: string; caption: string },
+  ) => {
+    event.stopPropagation();
+    onImagePreview(payload);
+  };
+
   return (
-    <Flex align="center" gap={4} minW={0}>
+    <Flex align="flex-start" gap={4} minW={0}>
       <Flex gap={2} flexShrink={0}>
         <Image
           src={project.designImage}
@@ -26,8 +37,8 @@ export function ProjectCell({ project, onImagePreview }: ProjectCellProps) {
             transform: 'translateY(-1px)',
             borderColor: 'admin.borderStrong',
           }}
-          onClick={() =>
-            onImagePreview({
+          onClick={(event) =>
+            handlePreviewClick(event, {
               src: project.designImage,
               alt: `${project.title} design`,
               caption: '3D Design',
@@ -50,8 +61,8 @@ export function ProjectCell({ project, onImagePreview }: ProjectCellProps) {
             transform: 'translateY(-1px)',
             borderColor: 'admin.borderStrong',
           }}
-          onClick={() =>
-            onImagePreview({
+          onClick={(event) =>
+            handlePreviewClick(event, {
               src: project.resultImage,
               alt: `${project.title} result`,
               caption: 'Result',
@@ -61,12 +72,15 @@ export function ProjectCell({ project, onImagePreview }: ProjectCellProps) {
       </Flex>
 
       <Box minW={0} flex="1">
-        <Text fontWeight="800" noOfLines={1}>
-          {project.title}
-        </Text>
-        <Text fontSize="sm" color="admin.textMuted" noOfLines={1}>
-          ID: {project.id}
-        </Text>
+        <Stack spacing={2} align="flex-start" minW={0}>
+          <Text fontWeight="800" noOfLines={2} lineHeight="1.25">
+            {project.title}
+          </Text>
+          <Flex gap={2} wrap="wrap">
+            <ProjectCategoryBadge category={project.category} />
+            <ProjectPublishBadge isPublished={project.isPublished} />
+          </Flex>
+        </Stack>
       </Box>
     </Flex>
   );
