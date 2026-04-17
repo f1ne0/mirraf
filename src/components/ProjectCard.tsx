@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { ProjectCategoryBadge } from '../entities/project/ui/ProjectCategoryBadge';
 import { Project } from '../types/project';
 import { ImagePreviewModal } from '../shared/ui/ImagePreviewModal';
 import { PanoramaModal } from './PanoramaModal';
@@ -131,6 +132,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         <Stack spacing={4}>
           <Stack spacing={2}>
+            <ProjectCategoryBadge
+              category={project.category}
+              tone="public"
+              alignSelf="flex-start"
+            />
             <Heading as="h3" fontSize={{ base: 'xl', sm: '2xl', md: '3xl' }} color="accent.900">
               {project.title}
             </Heading>

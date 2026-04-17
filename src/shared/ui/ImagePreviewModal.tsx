@@ -33,26 +33,32 @@ export function ImagePreviewModal({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="5xl" isCentered motionPreset="slideInBottom">
-      <ModalOverlay bg="blackAlpha.760" backdropFilter="blur(6px)" />
-      <ModalContent>
+      <ModalOverlay bg="rgba(33, 26, 18, 0.42)" backdropFilter="blur(6px)" />
+      <ModalContent
+        bg="rgba(255, 250, 244, 0.98)"
+        color="accent.900"
+        border="1px solid"
+        borderColor="blackAlpha.100"
+        boxShadow="0 24px 80px rgba(31, 24, 16, 0.18)"
+      >
         <ModalHeader>
           <Box>
             <Text fontWeight="800">{title}</Text>
             {caption ? (
-              <Text mt={1} fontSize="sm" color="gray.500">
+              <Text mt={1} fontSize="sm" color="accent.700">
                 {caption}
               </Text>
             ) : null}
           </Box>
         </ModalHeader>
-        <ModalCloseButton />
+        <ModalCloseButton color="accent.900" _hover={{ bg: 'blackAlpha.50' }} />
         <ModalBody pb={6}>
           <Box
             overflow="hidden"
             borderRadius="20px"
             border="1px solid"
-            borderColor="blackAlpha.200"
-            bg="gray.50"
+            borderColor="blackAlpha.100"
+            bg="rgba(245, 238, 229, 0.92)"
           >
             <Image
               src={imageSrc}
@@ -60,7 +66,7 @@ export function ImagePreviewModal({
               w="100%"
               maxH={{ base: '70vh', md: '78vh' }}
               objectFit="contain"
-              bg="gray.50"
+              bg="rgba(245, 238, 229, 0.92)"
             />
           </Box>
         </ModalBody>
