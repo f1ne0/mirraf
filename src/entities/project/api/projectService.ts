@@ -3,11 +3,13 @@ import {
   removeProjectImages,
   uploadProjectImage,
 } from '../../../shared/lib/supabase/storage';
+import { ProjectCategory } from '../model/categories';
 import { mapProjectRow, Project } from '../model/types';
 
 export type ProjectPayload = {
   title: string;
   address: string;
+  category: ProjectCategory;
   price: number;
   panoramaUrl: string;
   isPublished: boolean;
@@ -106,6 +108,7 @@ export async function createProject(payload: ProjectPayload): Promise<Project> {
         id: projectId,
         title: payload.title,
         address: payload.address,
+        category: payload.category,
         price: payload.price,
         design_image_url: designUpload.url,
         result_image_url: resultUpload.url,
@@ -171,6 +174,7 @@ export async function updateProject(id: string, payload: ProjectPayload): Promis
     .update({
       title: payload.title,
       address: payload.address,
+      category: payload.category,
       price: payload.price,
       design_image_url: designImageUrl,
       result_image_url: resultImageUrl,
@@ -178,6 +182,23 @@ export async function updateProject(id: string, payload: ProjectPayload): Promis
       result_image_path: resultImagePath,
       panorama_url: payload.panoramaUrl || null,
       is_published: payload.isPublished,
+    })
+    .eq('id', id)
+    .select('*')
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return mapProjectRow(data);
+}
+
+export async function setProjectPublished(id: string, isPublished: boolean): Promise<Project> {
+  const { data, error } = await supabase
+    .from('projects')
+    .update({
+      is_published: isPublished,
     })
     .eq('id', id)
     .select('*')

@@ -4,6 +4,9 @@ create table if not exists public.projects (
   id uuid primary key default gen_random_uuid(),
   title text not null,
   address text not null,
+  category text not null default 'other' check (
+    category in ('kitchen', 'bedroom', 'children', 'living_room', 'hallway', 'office', 'other')
+  ),
   price bigint not null check (price >= 0),
   design_image_url text not null,
   result_image_url text not null,
@@ -19,6 +22,7 @@ create table if not exists public.projects (
 create index if not exists projects_user_id_idx on public.projects(user_id);
 create index if not exists projects_created_at_idx on public.projects(created_at desc);
 create index if not exists projects_is_published_idx on public.projects(is_published);
+create index if not exists projects_category_idx on public.projects(category);
 
 create or replace function public.set_updated_at()
 returns trigger

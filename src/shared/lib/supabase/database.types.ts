@@ -14,6 +14,7 @@ export type Database = {
           id: string;
           title: string;
           address: string;
+          category: string;
           price: number;
           design_image_url: string;
           result_image_url: string;
@@ -29,6 +30,7 @@ export type Database = {
           id?: string;
           title: string;
           address: string;
+          category?: string;
           price: number;
           design_image_url: string;
           result_image_url: string;
@@ -44,6 +46,7 @@ export type Database = {
           id?: string;
           title?: string;
           address?: string;
+          category?: string;
           price?: number;
           design_image_url?: string;
           result_image_url?: string;

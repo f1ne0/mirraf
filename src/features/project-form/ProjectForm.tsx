@@ -5,13 +5,14 @@ import {
   FormLabel,
   Grid,
   Input,
+  Select,
   Stack,
   Switch,
   Text,
   useToast,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ChangeEvent, useMemo, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
   createProjectSchema,
@@ -19,6 +20,7 @@ import {
   updateProjectSchema,
   UpdateProjectFormValues,
 } from '../../entities/project/model/schemas';
+import { PROJECT_CATEGORY_OPTIONS } from '../../entities/project/model/categories';
 import { Project } from '../../entities/project/model/types';
 import { FileUpload } from './FileUpload';
 
@@ -29,6 +31,7 @@ type ProjectFormProps = {
   onSubmit: (payload: {
     title: string;
     address: string;
+    category: Project['category'];
     price: number;
     panoramaUrl: string;
     isPublished: boolean;
@@ -38,6 +41,32 @@ type ProjectFormProps = {
 };
 
 type FormValues = CreateProjectFormValues | UpdateProjectFormValues;
+
+type DraftValues = Pick<
+  CreateProjectFormValues,
+  'title' | 'address' | 'category' | 'price' | 'panoramaUrl' | 'isPublished'
+>;
+
+function formatPriceInput(value: string) {
+  const digits = value.replace(/[^\d]/g, '');
+
+  if (!digits) {
+    return '';
+  }
+
+  return new Intl.NumberFormat('ru-RU').format(Number(digits));
+}
+
+function getDefaultValues(mode: 'create' | 'edit', initialValues?: Project | null): DraftValues {
+  return {
+    title: initialValues?.title ?? '',
+    address: initialValues?.address ?? '',
+    category: initialValues?.category ?? 'other',
+    price: initialValues?.price ? String(initialValues.price) : '',
+    panoramaUrl: initialValues?.panoramaUrl ?? '',
+    isPublished: initialValues?.isPublished ?? mode === 'create',
+  };
+}
 
 export function ProjectForm({
   mode,
@@ -50,6 +79,35 @@ export function ProjectForm({
     () => (mode === 'create' ? createProjectSchema : updateProjectSchema),
     [mode],
   );
+  const draftStorageKey = useMemo(
+    () => `project-form-draft:${mode}:${initialValues?.id ?? 'new'}`,
+    [initialValues?.id, mode],
+  );
+  const defaultValues = useMemo(() => {
+    const baseValues = getDefaultValues(mode, initialValues);
+
+    if (typeof window === 'undefined') {
+      return baseValues;
+    }
+
+    const rawDraft = window.sessionStorage.getItem(draftStorageKey);
+
+    if (!rawDraft) {
+      return baseValues;
+    }
+
+    try {
+      const parsedDraft = JSON.parse(rawDraft) as Partial<DraftValues>;
+
+      return {
+        ...baseValues,
+        ...parsedDraft,
+      };
+    } catch {
+      window.sessionStorage.removeItem(draftStorageKey);
+      return baseValues;
+    }
+  }, [draftStorageKey, initialValues, mode]);
 
   const [designPreview, setDesignPreview] = useState(initialValues?.designImage ?? '');
   const [resultPreview, setResultPreview] = useState(initialValues?.resultImage ?? '');
@@ -58,19 +116,35 @@ export function ProjectForm({
     register,
     control,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      title: initialValues?.title ?? '',
-      address: initialValues?.address ?? '',
-      price: initialValues?.price ?? 0,
-      panoramaUrl: initialValues?.panoramaUrl ?? '',
-      isPublished: initialValues?.isPublished ?? mode === 'create',
+      ...defaultValues,
       designImage: undefined,
       resultImage: undefined,
     },
   });
+  const watchedValues = watch(['title', 'address', 'category', 'price', 'panoramaUrl', 'isPublished']);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const [title, address, category, price, panoramaUrl, isPublished] = watchedValues;
+    const nextDraft: DraftValues = {
+      title,
+      address,
+      category,
+      price,
+      panoramaUrl,
+      isPublished,
+    };
+
+    window.sessionStorage.setItem(draftStorageKey, JSON.stringify(nextDraft));
+  }, [draftStorageKey, watchedValues]);
 
   const updatePreview = (
     event: ChangeEvent<HTMLInputElement>,
@@ -86,12 +160,17 @@ export function ProjectForm({
       await onSubmit({
         title: values.title,
         address: values.address,
-        price: values.price,
+        category: values.category,
+        price: Number(String(values.price).replace(/[^\d]/g, '')),
         panoramaUrl: values.panoramaUrl,
         isPublished: values.isPublished,
         designImage: values.designImage ?? null,
         resultImage: values.resultImage ?? null,
       });
+
+      if (typeof window !== 'undefined') {
+        window.sessionStorage.removeItem(draftStorageKey);
+      }
     } catch (error) {
       toast({
         title: error instanceof Error ? error.message : 'Не удалось сохранить проект.',
@@ -129,8 +208,32 @@ export function ProjectForm({
 
         <FormControl isInvalid={Boolean(errors.price)}>
           <FormLabel>Цена</FormLabel>
-          <Input type="number" placeholder="128000000" {...register('price')} />
+          <Controller
+            name="price"
+            control={control}
+            render={({ field }) => (
+              <Input
+                type="text"
+                inputMode="numeric"
+                placeholder="128 000 000"
+                value={formatPriceInput(String(field.value ?? ''))}
+                onChange={(event) => field.onChange(event.target.value.replace(/[^\d]/g, ''))}
+              />
+            )}
+          />
           <FormErrorMessage>{errors.price?.message?.toString()}</FormErrorMessage>
+        </FormControl>
+
+        <FormControl isInvalid={Boolean(errors.category)}>
+          <FormLabel>Категория</FormLabel>
+          <Select placeholder="Выберите категорию" {...register('category')}>
+            {PROJECT_CATEGORY_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </Select>
+          <FormErrorMessage>{errors.category?.message}</FormErrorMessage>
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.panoramaUrl)}>
@@ -201,7 +304,7 @@ export function ProjectForm({
         pt={2}
       >
         <Text color="admin.textMuted" fontSize="sm">
-          Проверьте поля и сохраните изменения.
+          Проверьте поля и сохраните изменения. Черновик сохраняется автоматически в этой сессии.
         </Text>
         <Button type="submit" isLoading={isSubmitting} minW="220px">
           {mode === 'create' ? 'Создать проект' : 'Сохранить изменения'}

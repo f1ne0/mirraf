@@ -1,4 +1,5 @@
 import { Database } from '../../../shared/lib/supabase/database.types';
+import { isProjectCategory, ProjectCategory } from './categories';
 
 export type ProjectRow = Database['public']['Tables']['projects']['Row'];
 
@@ -6,6 +7,7 @@ export type Project = {
   id: string;
   title: string;
   address: string;
+  category: ProjectCategory;
   price: number;
   designImage: string;
   resultImage: string;
@@ -23,6 +25,7 @@ export function mapProjectRow(row: ProjectRow): Project {
     id: row.id,
     title: row.title,
     address: row.address,
+    category: isProjectCategory(row.category) ? row.category : 'other',
     price: row.price,
     designImage: row.design_image_url,
     resultImage: row.result_image_url,
