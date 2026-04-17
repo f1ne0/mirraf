@@ -4,10 +4,12 @@ import {
   Container,
   Flex,
   Heading,
+  Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import mirrafLogo from "../assets/mirraf-logo.png";
 
 const MotionBox = motion(Box);
 const MotionFlex = motion(Flex);
@@ -105,20 +107,24 @@ export function HeroSection() {
             <MotionFlex
               align="center"
               justify="center"
-              w={{ base: "76px", sm: "88px", md: "112px" }}
-              h={{ base: "76px", sm: "88px", md: "112px" }}
-              rounded="full"
+              px={{ base: 4, md: 5 }}
+              py={{ base: 4, md: 5 }}
+              rounded="32px"
               border="1px solid"
-              borderColor="whiteAlpha.400"
-              bg="linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 100%)"
+              borderColor="whiteAlpha.300"
+              bg="linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 100%)"
               backdropFilter="blur(14px)"
               boxShadow="0 18px 48px rgba(0, 0, 0, 0.22)"
               variants={heroItem}
               whileHover={{ y: -3, scale: 1.02 }}
             >
-              <Text color="brand.200" fontSize={{ base: "2xl", md: "3xl" }} fontWeight="800">
-                M
-              </Text>
+              <Image
+                src={mirrafLogo}
+                alt="Mirraf logo"
+                h={{ base: "56px", sm: "64px", md: "84px" }}
+                objectFit="contain"
+                filter="drop-shadow(0 8px 20px rgba(0,0,0,0.16))"
+              />
             </MotionFlex>
 
             <MotionStack spacing={{ base: 3, md: 4 }} align="center" variants={heroItem}>
