@@ -43,7 +43,7 @@ export function SidebarItem({
       }}
     >
       <Flex align="center" gap={3}>
-        <Icon as={icon} boxSize={4.5} color="currentColor" />
+        <Icon as={icon} boxSize={6} color="currentColor" />
         <Text fontWeight="600">{label}</Text>
       </Flex>
     </Box>
