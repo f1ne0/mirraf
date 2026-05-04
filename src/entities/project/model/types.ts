@@ -7,6 +7,7 @@ export type Project = {
   id: string;
   title: string;
   address: string;
+  description: string | null;
   category: ProjectCategory;
   price: number;
   designImage: string;
@@ -25,6 +26,7 @@ export function mapProjectRow(row: ProjectRow): Project {
     id: row.id,
     title: row.title,
     address: row.address,
+    description: row.description,
     category: isProjectCategory(row.category) ? row.category : 'other',
     price: row.price,
     designImage: row.design_image_url,

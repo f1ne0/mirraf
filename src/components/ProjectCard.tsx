@@ -140,9 +140,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <Heading as="h3" fontSize={{ base: 'xl', sm: '2xl', md: '3xl' }} color="accent.900">
               {project.title}
             </Heading>
-            <Text color="accent.700" fontSize={{ base: 'sm', md: 'md' }} lineHeight={1.8}>
-              Ҳәзирги заман интерьерине мас, қолай ҳәм эстетик көриниске ийе жеке шешим.
-            </Text>
+            {project.description ? (
+              <Text color="accent.700" fontSize={{ base: 'sm', md: 'md' }} lineHeight={1.8}>
+                {project.description}
+              </Text>
+            ) : null}
           </Stack>
 
           <Stack spacing={1.5} color="accent.800" fontSize={{ base: 'sm', md: 'md' }} fontWeight="500">

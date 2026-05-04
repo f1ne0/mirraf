@@ -83,7 +83,13 @@ export function ProjectTable({
         boxShadow="adminCard"
         overflow="hidden"
       >
-        <TableContainer px={{ base: 2, md: 4 }} py={3} maxH="calc(100vh - 310px)" overflowY="auto">
+        <TableContainer
+          px={{ base: 2, md: 4 }}
+          pt={0}
+          pb={3}
+          maxH="calc(100vh - 310px)"
+          overflowY="auto"
+        >
           <Table variant="admin" tableLayout="fixed">
             <Thead>
               <Tr>

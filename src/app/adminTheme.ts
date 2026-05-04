@@ -202,6 +202,32 @@ export const adminTheme = extendTheme({
         variant: 'admin',
       },
     },
+    Textarea: {
+      variants: {
+        admin: {
+          bg: 'rgba(255,255,255,0.04)',
+          color: 'admin.text',
+          border: '1px solid',
+          borderColor: 'admin.border',
+          borderRadius: '16px',
+          _placeholder: {
+            color: 'admin.textSoft',
+          },
+          _hover: {
+            borderColor: 'admin.borderStrong',
+            bg: 'rgba(255,255,255,0.05)',
+          },
+          _focusVisible: {
+            borderColor: 'accent.400',
+            boxShadow: 'adminFocus',
+            bg: 'rgba(255,255,255,0.06)',
+          },
+        },
+      },
+      defaultProps: {
+        variant: 'admin',
+      },
+    },
     Checkbox: {
       baseStyle: {
         control: {

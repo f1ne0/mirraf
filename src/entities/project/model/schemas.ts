@@ -42,6 +42,12 @@ export const loginSchema = z.object({
 export const createProjectSchema = z.object({
   title: z.string().min(3, 'Введите название проекта.').max(120, 'Слишком длинное название.'),
   address: z.string().min(5, 'Введите адрес проекта.').max(180, 'Слишком длинный адрес.'),
+  description: z
+    .string()
+    .trim()
+    .max(500, 'Описание должно быть не длиннее 500 символов.')
+    .optional()
+    .or(z.literal('')),
   category: z.enum(PROJECT_CATEGORY_VALUES, {
     errorMap: () => ({ message: 'Выберите категорию проекта.' }),
   }),
@@ -55,6 +61,12 @@ export const createProjectSchema = z.object({
 export const updateProjectSchema = z.object({
   title: z.string().min(3, 'Введите название проекта.').max(120, 'Слишком длинное название.'),
   address: z.string().min(5, 'Введите адрес проекта.').max(180, 'Слишком длинный адрес.'),
+  description: z
+    .string()
+    .trim()
+    .max(500, 'Описание должно быть не длиннее 500 символов.')
+    .optional()
+    .or(z.literal('')),
   category: z.enum(PROJECT_CATEGORY_VALUES, {
     errorMap: () => ({ message: 'Выберите категорию проекта.' }),
   }),

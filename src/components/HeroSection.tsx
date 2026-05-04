@@ -4,12 +4,17 @@ import {
   Container,
   Flex,
   Heading,
+  HStack,
+  Icon,
   Image,
+  Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import mirrafLogo from "../assets/mirraf-logo.png";
+import { FiExternalLink, FiMapPin, FiPhone } from "react-icons/fi";
+import mirrafLogo from "../assets/mirraf-logo.webp";
+import { STORE_CONTACTS } from "../shared/constants/store";
 
 const MotionBox = motion(Box);
 const MotionFlex = motion(Flex);
@@ -179,6 +184,81 @@ export function HeroSection() {
             >
               Проектлерди көриў
             </MotionButton>
+
+            <MotionStack
+              spacing={3}
+              w="full"
+              maxW="3xl"
+              variants={heroItem}
+            >
+              <HStack
+                spacing={3}
+                flexWrap="wrap"
+                justify="center"
+              >
+                <HStack
+                  px={4}
+                  py={3}
+                  borderRadius="full"
+                  bg="rgba(255,255,255,0.12)"
+                  border="1px solid"
+                  borderColor="whiteAlpha.220"
+                  backdropFilter="blur(10px)"
+                  color="white"
+                >
+                  <Icon as={FiPhone} color="brand.200" />
+                  <Text fontSize={{ base: "sm", md: "md" }} fontWeight="700">
+                    {STORE_CONTACTS.phone}
+                  </Text>
+                </HStack>
+
+                {STORE_CONTACTS.address ? (
+                  <HStack
+                    px={4}
+                    py={3}
+                    borderRadius="full"
+                    bg="rgba(255,255,255,0.12)"
+                    border="1px solid"
+                    borderColor="whiteAlpha.220"
+                    backdropFilter="blur(10px)"
+                    color="white"
+                  >
+                    <Icon as={FiMapPin} color="brand.200" />
+                    <Text fontSize={{ base: "sm", md: "md" }} fontWeight="700">
+                      {STORE_CONTACTS.address}
+                    </Text>
+                  </HStack>
+                ) : null}
+              </HStack>
+
+              <Link
+                href={STORE_CONTACTS.instagramUrl}
+                isExternal
+                alignSelf="center"
+                _hover={{ textDecoration: "none" }}
+              >
+                <HStack
+                  px={4}
+                  py={3}
+                  borderRadius="full"
+                  bg="rgba(255,255,255,0.12)"
+                  border="1px solid"
+                  borderColor="whiteAlpha.220"
+                  backdropFilter="blur(10px)"
+                  color="white"
+                  transition="all 0.2s ease"
+                  _hover={{
+                    bg: "rgba(255,255,255,0.16)",
+                    transform: "translateY(-1px)",
+                  }}
+                >
+                  <Text fontSize={{ base: "sm", md: "md" }} fontWeight="700">
+                    Instagram {STORE_CONTACTS.instagramHandle}
+                  </Text>
+                  <Icon as={FiExternalLink} color="brand.200" />
+                </HStack>
+              </Link>
+            </MotionStack>
           </MotionStack>
         </MotionFlex>
       </Container>

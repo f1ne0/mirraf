@@ -4,6 +4,7 @@ create table if not exists public.projects (
   id uuid primary key default gen_random_uuid(),
   title text not null,
   address text not null,
+  description text,
   category text not null default 'other' check (
     category in ('kitchen', 'bedroom', 'children', 'living_room', 'hallway', 'office', 'other')
   ),

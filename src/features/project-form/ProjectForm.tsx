@@ -8,6 +8,7 @@ import {
   Select,
   Stack,
   Switch,
+  Textarea,
   Text,
   useToast,
 } from '@chakra-ui/react';
@@ -31,6 +32,7 @@ type ProjectFormProps = {
   onSubmit: (payload: {
     title: string;
     address: string;
+    description: string;
     category: Project['category'];
     price: number;
     panoramaUrl: string;
@@ -44,7 +46,7 @@ type FormValues = CreateProjectFormValues | UpdateProjectFormValues;
 
 type DraftValues = Pick<
   CreateProjectFormValues,
-  'title' | 'address' | 'category' | 'price' | 'panoramaUrl' | 'isPublished'
+  'title' | 'address' | 'description' | 'category' | 'price' | 'panoramaUrl' | 'isPublished'
 >;
 
 function formatPriceInput(value: string) {
@@ -61,6 +63,7 @@ function getDefaultValues(mode: 'create' | 'edit', initialValues?: Project | nul
   return {
     title: initialValues?.title ?? '',
     address: initialValues?.address ?? '',
+    description: initialValues?.description ?? '',
     category: initialValues?.category ?? 'other',
     price: initialValues?.price ? String(initialValues.price) : '',
     panoramaUrl: initialValues?.panoramaUrl ?? '',
@@ -126,17 +129,26 @@ export function ProjectForm({
       resultImage: undefined,
     },
   });
-  const watchedValues = watch(['title', 'address', 'category', 'price', 'panoramaUrl', 'isPublished']);
+  const watchedValues = watch([
+    'title',
+    'address',
+    'description',
+    'category',
+    'price',
+    'panoramaUrl',
+    'isPublished',
+  ]);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
       return;
     }
 
-    const [title, address, category, price, panoramaUrl, isPublished] = watchedValues;
+    const [title, address, description, category, price, panoramaUrl, isPublished] = watchedValues;
     const nextDraft: DraftValues = {
       title,
       address,
+      description,
       category,
       price,
       panoramaUrl,
@@ -160,6 +172,7 @@ export function ProjectForm({
       await onSubmit({
         title: values.title,
         address: values.address,
+        description: values.description?.trim() ?? '',
         category: values.category,
         price: Number(String(values.price).replace(/[^\d]/g, '')),
         panoramaUrl: values.panoramaUrl,
@@ -204,6 +217,17 @@ export function ProjectForm({
           <FormLabel>Адрес</FormLabel>
           <Input placeholder="Город, район, улица" {...register('address')} />
           <FormErrorMessage>{errors.address?.message}</FormErrorMessage>
+        </FormControl>
+
+        <FormControl isInvalid={Boolean(errors.description)}>
+          <FormLabel>Описание</FormLabel>
+          <Textarea
+            placeholder="Добавьте индивидуальное описание проекта"
+            minH="132px"
+            resize="vertical"
+            {...register('description')}
+          />
+          <FormErrorMessage>{errors.description?.message}</FormErrorMessage>
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.price)}>

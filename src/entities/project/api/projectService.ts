@@ -9,6 +9,7 @@ import { mapProjectRow, Project } from '../model/types';
 export type ProjectPayload = {
   title: string;
   address: string;
+  description: string;
   category: ProjectCategory;
   price: number;
   panoramaUrl: string;
@@ -108,6 +109,7 @@ export async function createProject(payload: ProjectPayload): Promise<Project> {
         id: projectId,
         title: payload.title,
         address: payload.address,
+        description: payload.description || null,
         category: payload.category,
         price: payload.price,
         design_image_url: designUpload.url,
@@ -174,6 +176,7 @@ export async function updateProject(id: string, payload: ProjectPayload): Promis
     .update({
       title: payload.title,
       address: payload.address,
+      description: payload.description || null,
       category: payload.category,
       price: payload.price,
       design_image_url: designImageUrl,
